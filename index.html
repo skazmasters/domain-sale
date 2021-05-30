@@ -48,7 +48,7 @@
           <div class="container">
             <div class="row height-100">
               <div class="col-sm-10 offset-sm-1 mt-2">
-                <form id="main-offer-form" action="contact.php" method="post">
+                <form id="main-offer-form" action="./contact.php" method="post">
                   <h2 class="text-primary">Interested in this domain?</h2>
                   <hr/>
                   <div class="form-group">
@@ -108,53 +108,55 @@
     </div>
   </div>
 </section>
-<script src="js/jquery.min.js" defer></script>
-<script src="js/jquery.validate.min.js" defer></script>
+<script src="./js/jquery.min.js" defer></script>
+<script src="./js/jquery.validate.min.js" defer></script>
 <script>
-  $("#main-offer-form").validate({
-    errorClass: 'form-control-feedback',
-    errorElement: 'div',
-    highlight: function (element) {
-      $(element).parents(".form-group").addClass("has-danger");
-    },
-    unhighlight: function (element) {
-      $(element).parents(".form-group").removeClass("has-danger");
-    },
-    rules: {
-      name: 'required',
-      email: {
-        required: true,
-        email: true
+  document.addEventListener('DOMContentLoaded', () => {
+    $("#main-offer-form").validate({
+      errorClass: 'form-control-feedback',
+      errorElement: 'div',
+      highlight: function (element) {
+        $(element).parents(".form-group").addClass("has-danger");
       },
-      phone: {
-        required: true,
-        minlength: 10,
-        maxlength: 10
+      unhighlight: function (element) {
+        $(element).parents(".form-group").removeClass("has-danger");
       },
-      price: "required",
-      comments: {
-        maxlength: 500
+      rules: {
+        name: 'required',
+        email: {
+          required: true,
+          email: true
+        },
+        phone: {
+          required: true,
+          minlength: 10,
+          maxlength: 10
+        },
+        price: "required",
+        comments: {
+          maxlength: 500
+        }
+      },
+      messages: {
+        name: 'Please enter your name.',
+        email: {
+          required: 'You can not leave this empty.',
+          email: 'Please enter a valid email address.'
+        },
+        phone: {
+          required: 'You can not leave this empty.',
+          matches: 'Please enter a valide phone number.',
+          minlength: 'Phone number should be min 10 digits.',
+          maxlength: 'Phone number should be max 10 digits.'
+        },
+        price: {
+          price: 'Please enter offered price.'
+        },
+        comments: {
+          maxlength: 'Message length must be less than 500 character.'
+        }
       }
-    },
-    messages: {
-      name: 'Please enter your name.',
-      email: {
-        required: 'You can not leave this empty.',
-        email: 'Please enter a valid email address.'
-      },
-      phone: {
-        required: 'You can not leave this empty.',
-        matches: 'Please enter a valide phone number.',
-        minlength: 'Phone number should be min 10 digits.',
-        maxlength: 'Phone number should be max 10 digits.'
-      },
-      price: {
-        price: 'Please enter offered price.'
-      },
-      comments: {
-        maxlength: 'Message length must be less than 500 character.'
-      }
-    }
+    });
   });
 </script>
 </body>
