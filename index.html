@@ -106,16 +106,6 @@
                   </v-col>
                   <!--Номер телефона-->
                   <v-col cols="12">
-                    <!--                    <v-text-field-->
-                    <!--                        type="text"-->
-                    <!--                        v-model="phone"-->
-                    <!--                        label="Номер телефона"-->
-                    <!--                        placeholder="+7 (123) 456-78-90"-->
-                    <!--                        minlength="11"-->
-                    <!--                        v-mask="'+7 (###) ###-##-##'"-->
-                    <!--                        hide-details="auto"-->
-                    <!--                        clearable></v-text-field>-->
-
                     <vue-tel-input-vuetify
                         v-model="myPhone"
                         :preferred-countries="['ru', 'by', 'ua', 'us']"
@@ -185,7 +175,7 @@
                         v-bind="attrs"
                         @click="snackbar = false"
                     >
-                      Close
+                      Закрыть
                     </v-btn>
                   </template>
                 </v-snackbar>
