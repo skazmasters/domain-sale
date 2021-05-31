@@ -12,8 +12,8 @@
   <!--Google Fonts-->
   <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-  <!--Custom CSS-->
-  <link href="https://cdn.jsdelivr.net/npm/@mdi/font@4.x/css/materialdesignicons.min.css" rel="stylesheet">
+  <!--Vuetify-->
+  <link href="https://fonts.googleapis.com/css?family=Material+Icons" rel="stylesheet">
   <link href="https://cdn.jsdelivr.net/npm/vuetify@2.x/dist/vuetify.min.css" rel="stylesheet">
   <link rel="stylesheet" href="css/style.css"/>
 </head>
@@ -37,58 +37,20 @@
         </section>
       </div>
       <div class="col-12 col-md-6 min-vh-100 d-flex">
-        <section class="hero p-5">
+        <section class="hero p-md-5">
           <h2 class="h2 m-0 text-primary">Обратная связь</h2>
-
-          <form class="border-top pt-4 mt-4" id="main-offer-form" action="./contact.php" method="post">
-            <div class="form-floating mb-3">
-              <input
-                  type="text"
-                  name="name"
-                  id="name"
-                  class="form-control"
-                  placeholder="Ваше имя"
-              >
-              <label for="name">Ваше имя (обязательно)</label>
-            </div>
-            <div class="form-floating mb-3">
-              <input
-                  type="email"
-                  name="email"
-                  id="email"
-                  class="form-control"
-                  placeholder="Email (Required)"
-              >
-              <label for="email">Email</label>
-            </div>
-            <div class="form-floating mb-3">
-              <input
-                  type="text"
-                  name="phone"
-                  id="phone"
-                  class="form-control"
-                  placeholder="Номер телефона"
-              >
-              <label for="phone">Номер телефона</label>
-            </div>
-
-            <div class="form-floating mb-3">
-              <textarea name="comments" id="comments" class="form-control" placeholder="Message (optional)"></textarea>
-              <label for="comments">Сообщение</label>
-            </div>
-
-            <button type="submit" class="btn text-white btn-lg bg-primary btn-block">отправить письмо</button>
-          </form>
 
           <div class="border-top pt-4 mt-4" id="touchForm">
             <v-app>
-              <v-form class="pa-4 pt-6" ref="form" v-model="form" action="./contact.php" method="post">
+              <v-form class="pa-md-4 pt-md-6" ref="form" v-model="form" action="./contact.php" method="post">
                 <v-row>
                   <!--Ваше имя-->
                   <v-col cols="12">
                     <v-text-field
                         v-model="name"
                         :rules="[rules.required]"
+                        name="name"
+                        id="name"
                         label="Ваше имя"
                         placeholder="Иванов Иван Иванович"
                         hide-details="auto"
@@ -99,6 +61,8 @@
                     <v-text-field
                         v-model="email"
                         :rules="[rules.email, rules.required]"
+                        name="email"
+                        id="email"
                         label="E-mail"
                         placeholder="example@ahml1.ru"
                         hide-details="auto"
@@ -110,10 +74,13 @@
                         v-model="myPhone"
                         :preferred-countries="['ru', 'by', 'ua', 'us']"
                         :valid-characters-only="true"
+                        name="phone"
+                        id="phone"
                         select-label="Страна"
                         label="Номер телефона"
                         placeholder="+7 (123) 456-78-90"
                         :validate-on-blur="true"
+                        :hide-details="true"
                         clearable
                         :rules="isPhoneTouched ? [rules.required] : []"
                         :error="!phone.valid && isPhoneTouched && myPhone"
@@ -127,14 +94,17 @@
                   <v-col cols="12">
                     <v-textarea
                         clearable
-                        clear-icon="mdi-close-circle"
                         counter="1000"
+                        :color="userMessage?.split('').length > 800 && userMessage?.split('').length < 1000 ? 'orange' : ''"
+                        maxlength="1001"
                         auto-grow
                         rows="1"
-                        label="Сообщение"
-                        :class="{ 'yellow': this.counter > 8 }"
+                        name="comments"
+                        id="comments"
+                        hide-details="auto"
+                        label="Комментарий"
                         :rules="[rules.messageMin, rules.messageMax, rules.required]"
-                        :value="userMessage"
+                        v-model="userMessage"
                     ></v-textarea>
                   </v-col>
                   <!--Отправить-->
@@ -209,6 +179,9 @@
           },
         },
       },
+      icons: {
+        iconfont: 'md',
+      },
     })
     Vue.use(VueTelInputVuetify, {
       vuetify,
@@ -228,9 +201,9 @@
           required: v => !!v || 'Поле обязательно для заполнения',
         },
         errors: [],
-        name: null,
-        email: null,
-        userMessage: null,
+        name: '',
+        email: '',
+        userMessage: '',
         form: false,
         snackbar: false,
         myPhone: '',
@@ -240,6 +213,7 @@
           country: undefined,
         },
         isPhoneTouched: false,
+        messageCounter: 0,
       }),
       methods: {
         checkForm: function (e) {

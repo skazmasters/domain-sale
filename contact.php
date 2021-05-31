@@ -4,17 +4,16 @@ if (isset($_POST['email'])) {
 
   // EDIT THE 2 LINES BELOW AS REQUIRED
   $email_to = "gimmethenick@gmail.com";
-  $email_subject = "My offer for [Your Domain]";
+  $email_subject = "Поступило новое предложение о покупке домена ahml1.ru";
 
 
   $name = $_POST['name']; // required
   $email_from = $_POST['email']; // required
   $telephone = $_POST['phone']; // not required
-  $price = $_POST['price']; // not required
   $comments = $_POST['comments']; // required
 
 
-  $email_message = "Form details below.\n\n";
+  $email_message = "Детали сообщения ниже.\n\n";
 
   function clean_string($string)
   {
@@ -22,11 +21,10 @@ if (isset($_POST['email'])) {
     return str_replace($bad, "", $string);
   }
 
-  $email_message .= "Name: " . clean_string($name) . "\n";
+  $email_message .= "Имя: " . clean_string($name) . "\n";
   $email_message .= "Email: " . clean_string($email_from) . "\n";
-  $email_message .= "Telephone: " . clean_string($telephone) . "\n";
-  $email_message .= "Price($): " . clean_string($price) . "\n";
-  $email_message .= "Comments: " . clean_string($comments) . "\n";
+  $email_message .= "Телефон: " . clean_string($telephone) . "\n";
+  $email_message .= "Сообщение: " . clean_string($comments) . "\n";
 
   // create email headers
   $headers = 'From: ' . $email_from . "\r\n" .
@@ -71,8 +69,8 @@ if (isset($_POST['email'])) {
           <section class="bg-alt">
             <div class="row height-100">
               <div class="col-sm-8 offset-sm-2 mt-2">
-                <h1 class="pt-4 h2"><span class="text-green">Saroz Poddar</span></h1>
-                <span class="text-muted">Nepal</span>
+                <h1 class="pt-4 h2"><span class="text-green">Евгений Коцарев</span></h1>
+                <span class="text-muted">беларусь</span>
                 <p><span>UX/UI Designer & Front-end Developer</span></p>
               </div>
             </div>

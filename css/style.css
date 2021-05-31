@@ -168,7 +168,7 @@ textarea.form-control {
 }
 
 .text-primary {
-  color: #00c853 !important;
+  color: #43A047 !important;
 }
 
 .text-purple {
@@ -281,4 +281,11 @@ label {
 .border-none {
   border: none !important;
   border-color: transparent !important;
+}
+
+.country-code .v-input__slot {
+  margin: 0;
+}
+.country-code .v-text-field__details {
+  display: none;
 }
