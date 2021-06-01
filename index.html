@@ -23,27 +23,27 @@
   <div class="container-fluid">
     <div class="row">
       <div class="col-12 col-md-6 vh-fix py-5 bg-faded d-flex">
-        <section class="hero py-4 p-sm-0 m-auto text-center">
+        <section class="hero py-4 p-sm-0 m-auto text-center" style="max-width: 400px;">
           <h1 class="h2 m-0">
             <span class="d-block text-green">ahml1.ru</span>
-            <small>домен доступен для покупки</small>
+            <small>домен продаётся</small>
           </h1>
-          <p class="m-0 mt-4">Заинтересованы? Пожалуйста, оставьте заявку.</p>
+          <p class="m-0 mt-4">Заинтересованы в покупке? Оставьте Ваши контактные данные в заявке.</p>
           <div class="mt-5">
             <label for="name">
-              <span class="btn text-white bg-green btn-lg">Написать!</span>
+              <span class="btn text-white bg-green btn-lg">Оформить заявку</span>
             </label>
           </div>
         </section>
       </div>
       <div class="col-12 col-md-6 vh-fix d-flex" id="right" style="opacity: 0;">
         <section class="hero py-5 p-md-5">
-          <h2 class="h2 m-0 text-primary">Обратная связь</h2>
+          <h2 class="h2 m-0 text-primary">Заявка на покупку домена</h2>
 
           <div class="border-top pt-4 mt-4" id="touchForm">
             <v-app>
               <v-expand-transition>
-                <v-form v-show="isPageLoaded" class="pa-md-4 pt-md-6" ref="form" v-model="form">
+                <v-form v-show="isPageLoaded" class="pb-6" ref="form" v-model="form">
                   <v-row>
                     <!--Ваше имя-->
                     <v-col cols="12">
@@ -151,6 +151,21 @@
                     </template>
                   </v-snackbar>
                 </div>
+                <v-snackbar v-model="successMsg">
+                  Спасибо за заявку!
+
+                  <template v-slot:action="{ attrs }">
+                    <v-btn
+                        color="pink"
+                        text
+                        v-bind="attrs"
+                        @click="successMsg = false"
+                    >
+                      Закрыть
+                    </v-btn>
+                  </template>
+                </v-snackbar>
+
               </v-expand-transition>
             </v-app>
           </div>
@@ -163,12 +178,10 @@
 
 <script src="https://cdn.jsdelivr.net/npm/vue@2.6.12" defer></script>
 <script src="https://cdn.jsdelivr.net/npm/vuetify@2.x/dist/vuetify.min.js" defer></script>
-<script src="https://cdn.jsdelivr.net/npm/v-mask/dist/v-mask.min.js" defer></script>
 <script src="./js/tel.js" defer></script>
 
 <script>
   document.addEventListener('DOMContentLoaded', () => {
-    Vue.directive('mask', VueMask.VueMaskDirective);
     Vue.use(Vuetify);
     const vuetify = new Vuetify({
       theme: {
@@ -208,6 +221,7 @@
         userMessage: '',
         form: false,
         snackbar: false,
+        successMsg: false,
         myPhone: '',
         phone: {
           number: '',
@@ -271,6 +285,8 @@
                 return Promise.reject(error);
               }
 
+              this.$refs.form.reset();
+              this.successMsg = true;
               // console.log(data)
             })
             .catch(error => {
