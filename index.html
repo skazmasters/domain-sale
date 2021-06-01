@@ -42,7 +42,7 @@
 
           <div class="border-top pt-4 mt-4" id="touchForm">
             <v-app>
-              <v-form class="pa-md-4 pt-md-6" ref="form" v-model="form" action="./contact.php" method="post">
+              <v-form class="pa-md-4 pt-md-6" ref="form" v-model="form">
                 <v-row>
                   <!--Ваше имя-->
                   <v-col cols="12">
@@ -214,15 +214,20 @@
         },
         isPhoneTouched: false,
         messageCounter: 0,
+        isLoading: false,
       }),
       methods: {
         checkForm: function (e) {
+          e.preventDefault();
+          this.isLoading = true;
+
           this.errors = [];
 
           if (!this.name) {
             this.errors.push('Укажите имя.');
             this.snackbar = true;
           }
+
           if (!this.email) {
             this.errors.push('Укажите электронную почту.');
             this.snackbar = true;
@@ -232,10 +237,42 @@
           }
 
           if (!this.errors.length) {
-            return true;
+            this.created()
+          } else {
+            this.isLoading = false;
           }
+        },
+        created() {
+          // POST request using fetch with error handling
+          const requestOptions = {
+            method: 'POST',
+            headers: {
+              'Accept': 'application/json',
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+              name: `${this.name}`,
+              email: `${this.email}`,
+              phone: `${this.myPhone}`,
+              message: `${this.userMessage}`,
+            })
+          };
+          fetch('./contact.php', requestOptions)
+            .then(async response => {
+              const data = await response.json();
 
-          e.preventDefault();
+              // check for error response
+              if (!response.ok) {
+                // get error message from body or default to response status
+                const error = (data && data.message) || response.status;
+                return Promise.reject(error);
+              }
+
+              // console.log(data)
+            })
+            .catch(error => {
+              console.error('There was an error!', error);
+            });
         },
         validEmail: function (email) {
           const re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
@@ -248,7 +285,7 @@
         },
         onKeydown(e) {
           const char = String.fromCharCode(e.keyCode);
-          const reg = new RegExp('^\\d+$');
+          const reg = new RegExp('[0-9\\b]+');
           if (reg.test(char)) return null;
           else e.preventDefault();
         },
@@ -257,56 +294,5 @@
   });
 </script>
 
-<script src="./js/jquery.min.js" defer></script>
-<script src="./js/jquery.validate.min.js" defer></script>
-<script>
-  document.addEventListener('DOMContentLoaded', () => {
-    $("#main-offer-form").validate({
-      errorClass: 'form-control-feedback',
-      errorElement: 'div',
-      highlight: function (element) {
-        $(element).parents(".form-group").addClass("has-danger");
-      },
-      unhighlight: function (element) {
-        $(element).parents(".form-group").removeClass("has-danger");
-      },
-      rules: {
-        name: 'required',
-        email: {
-          required: true,
-          email: true
-        },
-        phone: {
-          required: true,
-          minlength: 10,
-          maxlength: 10
-        },
-        price: "required",
-        comments: {
-          maxlength: 500
-        }
-      },
-      messages: {
-        name: 'Please enter your name.',
-        email: {
-          required: 'You can not leave this empty.',
-          email: 'Please enter a valid email address.'
-        },
-        phone: {
-          required: 'You can not leave this empty.',
-          matches: 'Please enter a valid phone number.',
-          minlength: 'Phone number should be min 10 digits.',
-          maxlength: 'Phone number should be max 10 digits.'
-        },
-        price: {
-          price: 'Please enter offered price.'
-        },
-        comments: {
-          maxlength: 'Message length must be less than 500 character.'
-        }
-      }
-    });
-  });
-</script>
 </body>
 </html>
