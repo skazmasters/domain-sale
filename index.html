@@ -22,8 +22,8 @@
 <main class="bg-white">
   <div class="container-fluid">
     <div class="row">
-      <div class="col-12 col-md-6 min-vh-100 py-5 bg-faded d-flex">
-        <section class="hero m-auto text-center">
+      <div class="col-12 col-md-6 vh-fix py-5 bg-faded d-flex">
+        <section class="hero py-4 p-sm-0 m-auto text-center">
           <h1 class="h2 m-0">
             <span class="d-block text-green">ahml1.ru</span>
             <small>домен доступен для покупки</small>
@@ -36,120 +36,122 @@
           </div>
         </section>
       </div>
-      <div class="col-12 col-md-6 min-vh-100 d-flex">
-        <section class="hero p-md-5">
+      <div class="col-12 col-md-6 vh-fix d-flex" id="right" style="opacity: 0;">
+        <section class="hero py-5 p-md-5">
           <h2 class="h2 m-0 text-primary">Обратная связь</h2>
 
           <div class="border-top pt-4 mt-4" id="touchForm">
             <v-app>
-              <v-form class="pa-md-4 pt-md-6" ref="form" v-model="form">
-                <v-row>
-                  <!--Ваше имя-->
-                  <v-col cols="12">
-                    <v-text-field
-                        v-model="name"
-                        :rules="[rules.required]"
-                        name="name"
-                        id="name"
-                        label="Ваше имя"
-                        placeholder="Иванов Иван Иванович"
-                        hide-details="auto"
-                        clearable></v-text-field>
-                  </v-col>
-                  <!--E-mail-->
-                  <v-col cols="12">
-                    <v-text-field
-                        v-model="email"
-                        :rules="[rules.email, rules.required]"
-                        name="email"
-                        id="email"
-                        label="E-mail"
-                        placeholder="example@ahml1.ru"
-                        hide-details="auto"
-                        clearable></v-text-field>
-                  </v-col>
-                  <!--Номер телефона-->
-                  <v-col cols="12">
-                    <vue-tel-input-vuetify
-                        v-model="myPhone"
-                        :preferred-countries="['ru', 'by', 'ua', 'us']"
-                        :valid-characters-only="true"
-                        name="phone"
-                        id="phone"
-                        select-label="Страна"
-                        label="Номер телефона"
-                        placeholder="+7 (123) 456-78-90"
-                        :validate-on-blur="true"
-                        :hide-details="true"
-                        clearable
-                        :rules="isPhoneTouched ? [rules.required] : []"
-                        :error="!phone.valid && isPhoneTouched && myPhone"
-                        :success="phone.valid"
-                        @input="onInput"
-                        @keydown="onKeydown"
-                        @blur="isPhoneTouched = true"
-                    ></vue-tel-input-vuetify>
-                  </v-col>
-                  <!--Сообщение-->
-                  <v-col cols="12">
-                    <v-textarea
-                        clearable
-                        counter="1000"
-                        :color="userMessage?.split('').length > 800 && userMessage?.split('').length < 1000 ? 'orange' : ''"
-                        maxlength="1001"
-                        auto-grow
-                        rows="1"
-                        name="comments"
-                        id="comments"
-                        hide-details="auto"
-                        label="Комментарий"
-                        :rules="[rules.messageMin, rules.messageMax, rules.required]"
-                        v-model="userMessage"
-                    ></v-textarea>
-                  </v-col>
-                  <!--Отправить-->
-                  <v-col cols="12">
-                    <v-row>
-                      <v-col cols="auto">
-                        <v-btn text @click="$refs.form.reset(); isPhoneTouched = false">
-                          Очистить
-                        </v-btn>
-                      </v-col>
-                      <v-col cols="auto" class="ms-auto">
-                        <v-btn
-                            type="submit"
-                            :disabled="!form"
-                            color="primary"
-                            depressed
-                            @click="checkForm"
-                        >
-                          Отправить
-                        </v-btn>
-                      </v-col>
-                    </v-row>
-                  </v-col>
-                </v-row>
-              </v-form>
+              <v-expand-transition>
+                <v-form v-show="isPageLoaded" class="pa-md-4 pt-md-6" ref="form" v-model="form">
+                  <v-row>
+                    <!--Ваше имя-->
+                    <v-col cols="12">
+                      <v-text-field
+                          v-model="name"
+                          :rules="[rules.required]"
+                          name="name"
+                          id="name"
+                          label="Ваше имя"
+                          placeholder="Иванов Иван Иванович"
+                          hide-details="auto"
+                          clearable></v-text-field>
+                    </v-col>
+                    <!--E-mail-->
+                    <v-col cols="12">
+                      <v-text-field
+                          v-model="email"
+                          :rules="[rules.email, rules.required]"
+                          name="email"
+                          id="email"
+                          label="E-mail"
+                          placeholder="example@ahml1.ru"
+                          hide-details="auto"
+                          clearable></v-text-field>
+                    </v-col>
+                    <!--Номер телефона-->
+                    <v-col cols="12">
+                      <vue-tel-input-vuetify
+                          v-model="myPhone"
+                          :preferred-countries="['ru', 'by', 'ua', 'us']"
+                          :valid-characters-only="true"
+                          name="phone"
+                          id="phone"
+                          select-label="Страна"
+                          label="Номер телефона"
+                          placeholder="+7 (123) 456-78-90"
+                          :validate-on-blur="true"
+                          :hide-details="true"
+                          clearable
+                          :rules="isPhoneTouched ? [rules.required] : []"
+                          :error="!phone.valid && isPhoneTouched && myPhone"
+                          :success="phone.valid"
+                          @input="onInput"
+                          @keydown="onKeydown"
+                          @blur="isPhoneTouched = true"
+                      ></vue-tel-input-vuetify>
+                    </v-col>
+                    <!--Сообщение-->
+                    <v-col cols="12">
+                      <v-textarea
+                          clearable
+                          counter="1000"
+                          :color="userMessage?.split('').length > 800 && userMessage?.split('').length < 1000 ? 'orange' : ''"
+                          maxlength="1001"
+                          auto-grow
+                          rows="1"
+                          name="comments"
+                          id="comments"
+                          hide-details="auto"
+                          label="Комментарий"
+                          :rules="[rules.messageMin, rules.messageMax, rules.required]"
+                          v-model="userMessage"
+                      ></v-textarea>
+                    </v-col>
+                    <!--Отправить-->
+                    <v-col cols="12">
+                      <v-row>
+                        <v-col cols="auto">
+                          <v-btn text @click="$refs.form.reset(); isPhoneTouched = false">
+                            Очистить
+                          </v-btn>
+                        </v-col>
+                        <v-col cols="auto" class="ms-auto">
+                          <v-btn
+                              type="submit"
+                              :disabled="!form"
+                              color="primary"
+                              depressed
+                              @click="checkForm"
+                          >
+                            Отправить
+                          </v-btn>
+                        </v-col>
+                      </v-row>
+                    </v-col>
+                  </v-row>
+                </v-form>
 
-              <div v-if="errors.length">
-                <v-snackbar
-                    v-for="error in errors"
-                    v-model="snackbar"
-                >
-                  {{ error }}
+                <div v-if="errors.length">
+                  <v-snackbar
+                      v-for="error in errors"
+                      v-model="snackbar"
+                  >
+                    {{ error }}
 
-                  <template v-slot:action="{ attrs }">
-                    <v-btn
-                        color="pink"
-                        text
-                        v-bind="attrs"
-                        @click="snackbar = false"
-                    >
-                      Закрыть
-                    </v-btn>
-                  </template>
-                </v-snackbar>
-              </div>
+                    <template v-slot:action="{ attrs }">
+                      <v-btn
+                          color="pink"
+                          text
+                          v-bind="attrs"
+                          @click="snackbar = false"
+                      >
+                        Закрыть
+                      </v-btn>
+                    </template>
+                  </v-snackbar>
+                </div>
+              </v-expand-transition>
             </v-app>
           </div>
         </section>
@@ -187,7 +189,7 @@
       vuetify,
     });
 
-    const form = new Vue({
+    const mailForm = new Vue({
       el: '#touchForm',
       vuetify: vuetify,
       data: () => ({
@@ -215,6 +217,7 @@
         isPhoneTouched: false,
         messageCounter: 0,
         isLoading: false,
+        isPageLoaded: false,
       }),
       methods: {
         checkForm: function (e) {
@@ -289,7 +292,16 @@
           if (reg.test(char)) return null;
           else e.preventDefault();
         },
-      }
+      },
+      computed: {
+        pageVisible() {
+          return this.isPageLoaded;
+        }
+      },
+      mounted() {
+        this.isPageLoaded = true;
+        document.getElementById('right').style.opacity = 'initial';
+      },
     });
   });
 </script>

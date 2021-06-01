@@ -72,6 +72,21 @@ section {
   margin: 0 auto;
 }
 
+.vh-fix {
+  min-height: 100vh;
+}
+
+@media (max-width: 579.98px) {
+  .hero {
+    max-width: 100%;
+  }
+
+  .vh-fix {
+    min-height: auto;
+  }
+}
+
+
 .form-control {
   height: 3rem;
 }
@@ -95,52 +110,12 @@ textarea.form-control {
   background-color: #F2F2F2;
 }
 
-.bg-blue {
-  background-color: #032EFF !important;
-}
-
 .bg-primary {
   background-color: #00c853 !important;
 }
 
-.bg-purple {
-  background-color: #3d5afe;
-}
-
-.bg-orange {
-  background-color: #ffea00;
-}
-
-.bg-yellow {
-  background-color: #feac00;
-}
-
-.bg-pink {
-  background-color: #ff0080;
-}
-
 .bg-green {
-  background-color: #00c853;
-}
-
-.bg-red {
-  background-color: #FF3B30;
-}
-
-.bg-violet {
-  background-color: #7B1FA2;
-}
-
-.bg-teal {
-  background-color: #00796B;
-}
-
-.bg-slate {
-  background-color: #455A64;
-}
-
-.bg-indigo {
-  background-color: #303F9F;
+  background-color: #43A047;
 }
 
 /*===============================================
@@ -188,7 +163,7 @@ textarea.form-control {
 }
 
 .text-green {
-  color: #00c853 !important;
+  color: #43A047 !important;
 }
 
 .text-red {
@@ -286,6 +261,7 @@ label {
 .country-code .v-input__slot {
   margin: 0;
 }
+
 .country-code .v-text-field__details {
   display: none;
 }
