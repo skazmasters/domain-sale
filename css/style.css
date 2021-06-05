@@ -82,7 +82,7 @@ section {
   }
 
   .vh-fix {
-    min-height: auto;
+    min-height: 60vh;
   }
 }
 

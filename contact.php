@@ -14,7 +14,7 @@ if (isset($_POST) && $contentType === "application/json") {
   }
 
   // EDIT THE 2 LINES BELOW AS REQUIRED
-  $email_to = "gimmethenick@gmail.com";
+  $email_to = "a.belov@logtrade.ru";
   $email_subject = "Поступило новое предложение о покупке домена ahml1.ru";
 
 
